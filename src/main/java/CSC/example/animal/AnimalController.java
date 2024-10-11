@@ -14,12 +14,10 @@ public class AnimalController {
     @Autowired
     private AnimalService service;
 
-
     @GetMapping("/all")
     public List<Animal> getAllAnimals() {
         return service.getAllAnimals();
     }
-
 
     @GetMapping("/{animalId}")
     public Animal getOneAnimal(@PathVariable int animalId) {
@@ -27,10 +25,14 @@ public class AnimalController {
     }
 
     @GetMapping("")
-    public List<Animal> getAnimalsBySpecies(@RequestParam(name = "species", defaultValue = "bird") String species) {
+    public List<Animal> getAnimalsBySpecies(@RequestParam(name = "species", defaultValue = "") String species) {
         return service.getAnimalsBySpecies(species);
     }
 
+    @GetMapping("/name")
+    public List<Animal> getAnimalsByName(@RequestParam(name = "name", defaultValue = "") String name) {
+        return service.getAnimalsByName(name);
+    }
 
     @PostMapping("/new")
     public List<Animal> addNewAnimal(@RequestBody Animal animal) {
@@ -38,13 +40,11 @@ public class AnimalController {
         return service.getAllAnimals();
     }
 
-
-    @PutMapping("/update/{AnimalId}")
+    @PutMapping("/update/{animalId}")
     public Animal updateAnimal(@PathVariable int animalId, @RequestBody Animal animal) {
         service.updateAnimal(animalId, animal);
         return service.getAnimalById(animalId);
     }
-
 
     @DeleteMapping("/delete/{animalId}")
     public List<Animal> deleteAnimalById(@PathVariable int animalId) {
